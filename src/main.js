@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import BaiduMap from 'vue-baidu-map'
 import 'jquery'
-import '../static/js/bdmap-1.0'
 
 import Vue from 'vue'
 import App from './App.vue'
