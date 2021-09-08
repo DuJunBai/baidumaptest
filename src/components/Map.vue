@@ -11,7 +11,7 @@ export default {
   mounted() {
     // 百度地图API功能
     var map = new BMap.Map("map");    // 创建Map实例
-    map.centerAndZoom(new BMap.Point(121.551257, 38.890002), 11);  // 初始化地图,设置中心点坐标和地图级别
+    map.centerAndZoom(new BMap.Point(116.713637,40.111977), 20);  // 初始化地图,设置中心点坐标和地图级别
     //添加地图类型控件
     map.addControl(new BMap.MapTypeControl({
       mapTypes: [
