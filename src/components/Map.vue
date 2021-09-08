@@ -16,19 +16,41 @@ export default {
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 
     var geolocation = new BMap.Geolocation();
-    // 开启SDK辅助定位
-    geolocation.enableSDKLocation();
-    geolocation.getCurrentPosition(function(r){
-      if(this.getStatus() == BMAP_STATUS_SUCCESS){
-        var mk = new BMap.Marker(r.point);
+    // 获取自动定位获取的坐标信息
+    geolocation.getCurrentPosition(
+        function (r) {
+          let time = new Date().getTime();
+          console.log(time);
+          $.ajax({
+            type: "GET",
+            url: "https://map.baidu.com/?qt=ipLocation&t=" + time,
+            dataType: "jsonp",
+            success: function (result) {
+              let localtion = result.rgc.result.location;
+              var x = localtion.lng;
+              var y = localtion.lat;
+              var gpoint = new BMap.Point(x, y);
+              var mk = new BMap.Marker(gpoint);
+              map.addOverlay(mk);
+              map.panTo(gpoint);
+              alert("您的位置:" + gpoint.lng + "," + gpoint.lat)
+            },
+          });
+        },
+        { enableHighAccuracy: true }
+    );
+
+/*    navigator.geolocation.getCurrentPosition(function(position) {
+      var y = position.coords.latitude;
+      var x = position.coords.longitude;
+      var gpoint = new BMap.Point(x, y);
+      setTimeout(function () {
+        var mk = new BMap.Marker(gpoint);
         map.addOverlay(mk);
-        map.panTo(r.point);
-        alert('您的位置：' + r.point.lng + ',' + r.point.lat);
-      }
-      else {
-        alert('failed' + this.getStatus());
-      }
-    });
+        map.panTo(gpoint);
+        alert("您的位置:" + gpoint.lat + "," + gpoint.lng)
+      }, 1000)
+    })*/
   }
 }
 </script>
